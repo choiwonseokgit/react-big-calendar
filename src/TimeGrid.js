@@ -200,12 +200,21 @@ export default class TimeGrid extends Component {
       showMultiDayTimes,
       longPressThreshold,
       resizable,
+      isSideScroll
     } = this.props
 
     width = width || this.state.gutterWidth
 
     let start = range[0],
       end = range[range.length - 1]
+
+      if (isSideScroll) {
+        // 예를 들어, 현재 날짜를 중심으로 30일 범위를 설정
+        start = localizer.startOf(localizer.add(getNow(), -15, 'days'), 'day');
+        end = localizer.endOf(localizer.add(getNow(), 15, 'days'), 'day');
+        range = localizer.range(start, end);
+      }
+    
 
     this.slots = range.length
 
